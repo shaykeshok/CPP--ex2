@@ -2,6 +2,8 @@
     "files.associations": {
         "stdexcept": "cpp",
         "iostream": "cpp",
-        "ostream": "cpp"
+        "ostream": "cpp",
+        "typeinfo": "cpp",
+        "*.tcc": "cpp"
     }
 }
