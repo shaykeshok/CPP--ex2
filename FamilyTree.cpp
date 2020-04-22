@@ -8,30 +8,12 @@ using namespace std;
 
 namespace family{
 
-//      Tree &addFather(string son_name, string father_name){
 
-//      };
-//      void insert(string key){
-// 	if(root != NULL){
-// 		insert(key, root);
-// 	}else{
-// 		root = new Node;
-// 		root->value = key;
-// 		root->left = NULL;
-// 		root->right = NULL;
-// 	}
-// }
 
     Tree &Tree::addFather(string son_name, string father_name)
     {
         cout<<"\naddFather"<<"\nson_name: "<<son_name<<"\nfather_name: "<<father_name<<endl;
-        // Node *iterSon = root;
-        //int generation = 0;
-        //בדיקה שהילד קיים והחזרה של מצביע עליו
-        // if (!findNode(son_name, this->root, iterSon)){
-        //     cout<<"Exception: "<<"(!findNode(son_name, this->root, iterSon)"<<endl;
-        //     throw "son not found";
-        // }
+
          Node *iterSon=findNode(son_name, this->root);
          if (iterSon==nullptr){
             cout<<"Exception: "<<"(!findNode(son_name, this->root, iterSon)"<<endl;
@@ -64,57 +46,6 @@ namespace family{
         cout<<"-----------------------------"<<endl;
         return *this;
     };
-    //func that find if the node we want to add him parent is exist and if is exist
-    //the func return true and we have pointer to the node
-    //bool Tree::findNode(string name, Node *iter, Node *iterSon, int &generation)
-    // bool Tree::findNode(string name, Node *iter, Node *iterSon)
-    // {
-
-    //     cout<<"findNodestart"<<endl;
-    //     cout<<"name: "<<name<<endl;
-
-    //     if (iter == nullptr)
-    //     {
-    //          cout<<"iter == nullptr"<<endl;
-    //         return false;
-    //     }
-    //     if (name.compare(iter->name) == 0)
-    //     {
-    //         iterSon = iter;
-    //          cout<<"name.compare(iter->name) == 0"<<iterSon->name<<endl;
-    //         return true;
-    //     }
-    //     else
-    //     {
-    //         //generation += 1;
-    //         if (findNode(name, iter->father, iterSon)){
-    //              cout<<"findNode(name, iter->father, iterSon)"<<iter->name<<endl;
-    //             return true;
-    //         }
-    //         if (findNode(name, iter->mother, iterSon)){
-    //              cout<<"findNode(name, iter->mother, iterSon)"<<endl;
-    //             return true;
-    //         }        
-    //     }
-    //      cout<<"findNodeend"<<endl;
-    //     return false;
-    // }
-    //  bool Tree::findNode(string name, Node *iter, Node *iterSon){
-    //     cout<<"\n\nfindNode->"<<name<<endl;
-
-    //     list <Node*> :: iterator it; 
-
-    //     for(it = this->items.begin(); it != this->items.end(); it++){
-    //         cout<<"(*it)->name: "<<(*it)->name<<endl;
-
-    //         if((*it)->name.compare(name)==0){
-    //             cout<<"I find node with name: "<<(*it)->name<<endl;
-    //             iterSon=*it;
-    //             return true;
-    //         } 
-    //     }
-    //     return false;
-    //  }
 
      Node* Tree::findNode(string name, Node *iter){
         cout<<"\n\nfindNode->"<<name<<endl;
@@ -136,14 +67,6 @@ namespace family{
     Tree &Tree::addMother(string son_name, string mom_name)
     {
         cout<<"\naddMother"<<"\nson_name: "<<son_name<<"\nmom_name: "<<mom_name<<endl;
-
-        //Node *iterSon = root;
-        //בדיקה שהילד קיים והחזרה של מצביע עליו
-        // if (!findNode(son_name, this->root, iterSon)){
-        //     cout<<"Exception: "<<"!findNode(son_name, this->root, iterSon)"<<endl;
-        //     throw "son not found";
-        // }
-        // cout<<"\nson name after return from findNode: "<<iterSon->name<<endl;
         Node *iterSon=findNode(son_name, this->root);
         if (iterSon==nullptr){
             cout<<"Exception: "<<"(!findNode(son_name, this->root, iterSon)"<<endl;
@@ -183,7 +106,6 @@ namespace family{
     };
 
     string Tree::relation(string name){
-        // int generation = 0;
         //בדיקה שהאיש קיים והחזרה של מצביע עליו
         cout<<"\n\n\n----------------------------"<<endl;
         cout<<"relation: "<<name<<endl;
@@ -264,27 +186,37 @@ namespace family{
             for(it = this->items.begin(); it != this->items.end(); ++it){
                  if((*it)->level==countGreat+2) return (*it)->name;
             }
-            // switch (countGreat){
-                // case 1: //great grnadfather or grnadmother
-                //     if
-                //     break;
-                // case 2: //great-great grnadfather or grnadmother
-                //     return "grand" + gender;
-                //     break;
-                // default: //great...
-                    // string greatStr = "";
-                    // for (int i = 3; i <= generation; i++)
-                    // {
-                    //     greatStr = greatStr + "great-";
-                    // }
-                    // return greatStr + "grand" + gender;
-                    // break;
-            // }
         }
         return "There is no generation like this in this tree";
     };
 
     void Tree::remove(string name){
+        //בדיקה שלא מנסים למחוק את השורש של העץ
+        if(root->name.compare(name)==0){
+            string ex="Remove the root of the tree is impossible";
+            const char * c = ex.c_str();
+            __throw_runtime_error(c);
+        }
+        list <Node*> :: iterator it; 
+        Node* temp=nullptr;
+        for(it = this->items.begin(); it != this->items.end(); ++it){
+            if((*it)->name==name){
+                temp=(*it);
+                break;
+            } 
+        }
+        if(temp==nullptr){
+            string ex="Cant remove name that isnt exist in tree";
+            const char * c = ex.c_str();
+            __throw_runtime_error(c);
+        }
+        if(temp->father!=nullptr)
+            remove(temp->father->name);
+        if(temp->mother!=nullptr)
+            remove(temp->mother->name);
+
+        this->items.remove(temp);
+        free(temp);
 
     };
     vector<string> split(string text, bool caseSen){
