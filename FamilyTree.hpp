@@ -2,9 +2,14 @@
 #include <stdexcept>
 #include <list> 
 #include <iterator> 
+#include <vector>
+
 using namespace std;
 
 namespace family{
+  vector<string> split(string text, bool caseSen);
+  int countFreq(string &pat, string &txt);
+
   class Node{
         public:
         string name;
@@ -12,11 +17,12 @@ namespace family{
         Node* father;
         int level;
         int gender; // 0->root; 1->father; 2->mother
-        Node(string name,int level){
+        Node(string name,int level,int gender){
             this->name=name;
             this->mother=nullptr;
             this->father=nullptr;
             this->level=level;
+            this->gender=gender;
         }
      };
 
@@ -25,10 +31,10 @@ namespace family{
 
         public:
         list <Node*> items; 
-        static int level;
+        // static int level;
         Tree(const string& name){
-          level=0;
-          Node* newNode = new Node(name,level);
+          // level=0;
+          Node* newNode = new Node(name,0,0);
           newNode->gender=0;
           this->root=newNode;
           items.push_front(newNode);
@@ -40,6 +46,9 @@ namespace family{
         string find(string kirva);
         void remove(string name);
         //void insert(string name);
-        bool findNode(string name, Node* iter,Node* iterSon);
+        // bool findNode(string name, Node* iter,Node* iterSon);
+        
+        Node* findNode(string name, Node* iter);
+
     };
 };
