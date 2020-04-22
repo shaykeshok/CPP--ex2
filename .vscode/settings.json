@@ -4,6 +4,9 @@
         "iostream": "cpp",
         "ostream": "cpp",
         "typeinfo": "cpp",
-        "*.tcc": "cpp"
+        "*.tcc": "cpp",
+        "string": "cpp",
+        "array": "cpp",
+        "string_view": "cpp"
     }
 }

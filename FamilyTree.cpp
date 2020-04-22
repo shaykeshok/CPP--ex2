@@ -42,7 +42,10 @@ namespace family{
         Node *father = new Node(father_name,(iterSon->level)+1,1);
         //הפניית המצביע של חוליית האבא של הילד על החולייה החדשה
         iterSon->father = father;
+        //הוספת האבא לרשימה של הnodes
         this->items.push_back(father);
+        //הגדלת השלב של העץ
+        if(this->level<father->level) this->level=father->level;
         cout<<"-----------------------------"<<endl;
         return *this;
     };
@@ -95,16 +98,34 @@ namespace family{
         Node *mother = new Node(mom_name,(iterSon->level)+1,2);
         //הפניית המצביע של חוליית האמא של הילד על החולייה החדשה
         iterSon->mother = mother;
+        //הוספת האמא לרשימה של הnodes
         this->items.push_back(mother);
-
+        //הגדלת השלב של העץ
+        if(this->level<mother->level) this->level=mother->level;
         cout<<"-----------------------------"<<endl;
         return *this;
     };
 
     void Tree::display(){
-
+        if(this->root==nullptr){
+            string ex="There isn't root to this tree";
+            const char * c = ex.c_str();
+            __throw_runtime_error(c);
+        }
+        print_tree_structure(this->root,5);
     };
-
+  
+void Tree::print_tree_structure(Node* iter, int spaces)
+{
+  if(iter != NULL)
+  {
+    print_tree_structure(iter->father, spaces + 5);
+    for(int i = 0; i < spaces; i++)
+      	cout << ' ';
+    	cout << "   " << iter->name << endl;
+    print_tree_structure(iter->mother, spaces + 5);
+  }
+}
     string Tree::relation(string name){
         //בדיקה שהאיש קיים והחזרה של מצביע עליו
         cout<<"\n\n\n----------------------------"<<endl;

@@ -3,6 +3,7 @@
 #include <list> 
 #include <iterator> 
 #include <vector>
+#include <queue>
 
 using namespace std;
 
@@ -31,9 +32,8 @@ namespace family{
 
         public:
         list <Node*> items; 
-        // static int level;
+        int level=0;
         Tree(const string& name){
-          // level=0;
           Node* newNode = new Node(name,0,0);
           newNode->gender=0;
           this->root=newNode;
@@ -45,10 +45,11 @@ namespace family{
         string relation(string name);
         string find(string kirva);
         void remove(string name);
-        //void insert(string name);
-        // bool findNode(string name, Node* iter,Node* iterSon);
-        
+        void printTree(Node* node);
         Node* findNode(string name, Node* iter);
+        void print_tree_structure(Node* iter, int spaces);
+
+
 
     };
 };
