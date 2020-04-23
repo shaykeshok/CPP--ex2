@@ -48,7 +48,7 @@ namespace family{
         void printTree(Node* node);
         Node* findNode(string name, Node* iter);
         void print_tree_structure(Node* iter, int spaces);
-
+        void print();
 
 
     };
